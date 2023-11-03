@@ -1,0 +1,90 @@
+package com.example.sectweetapp;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+public class SignUpActivity extends AppCompatActivity {
+
+    EditText emailText;
+    EditText passwordText;
+    private FirebaseAuth firebaseAuth;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        emailText = findViewById(R.id.emailText);
+        passwordText = findViewById(R.id.passwordText);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+        if (firebaseUser != null) {
+
+            Intent intent = new Intent(SignUpActivity.this,FeedActivity.class);
+            startActivity(intent);
+            finish();
+
+        }
+
+
+    }
+
+    public void signInClicked(View view) {
+
+        String email = emailText.getText().toString();
+        String password = passwordText.getText().toString();
+
+
+        firebaseAuth.signInWithEmailAndPassword(email,password).addOnSuccessListener(authResult -> {
+
+            Intent intent = new Intent(SignUpActivity.this, FeedActivity.class);
+            startActivity(intent);
+            finish();
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SignUpActivity.this, e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+
+    }
+
+    public void signUpClicked(View view) {
+        String email = emailText.getText().toString();
+        String password = passwordText.getText().toString();
+
+
+        firebaseAuth.createUserWithEmailAndPassword(email,password).addOnSuccessListener(authResult -> {
+
+            Toast.makeText(SignUpActivity.this,"User Created",Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(SignUpActivity.this,FeedActivity.class);
+            startActivity(intent);
+            finish();
+
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(SignUpActivity.this, e.getLocalizedMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+    }
+}
