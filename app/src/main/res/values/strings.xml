@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">SecTweetApp</string>
+    <string name="user_email">user email</string>
+    <string name="password">password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="tweet">Tweet</string>
+    <string name="useremail">useremail</string>
+    <string name="textview">TextView</string>
+    <string name="signout">Signout</string>
+    <string name="add_a_tweet">Add a Tweet</string>
+</resources>
